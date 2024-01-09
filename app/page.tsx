@@ -1,7 +1,8 @@
-import Header from "@/components/ui/molecules/Header";
+
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -15,12 +16,16 @@ export default function Home() {
         <p className="mt-4 text-lg text-gray-600 dark:text-gray-400">
           Experience the freedom of communication without worrying about language limitations. ChatFlex offers both voice and video chats, allowing you to connect with people effortlessly.
         </p>
-        <div className="flex mt-5 gap-5">
-            <Button>Get Started</Button>
-            <Button variant={"outline"} className="border-primary hover:text-primary text-primary flex items-center gap-2">
-              View Pricing
-              <ArrowRight size={14}/>
-            </Button>
+        <div className="flex mt-10 gap-5 max-md:justify-center">
+            <Link href={"/chat"}>
+              <Button>Get Started</Button>
+            </Link>
+            <Link href={"/pricing"}>
+              <Button  variant={"outline"} className="border-primary hover:text-primary text-primary flex items-center gap-2" >
+                View Pricing
+                <ArrowRight size={14}/>
+              </Button>
+            </Link>
         </div>
       </div>
     </div>
