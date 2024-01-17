@@ -10,7 +10,7 @@ export default function Home() {
     {/* left section */}
     <div className="flex-col flex-1 p-5">
       <div className="max-md:p-0 p-8">
-        <h1 className="max-md:mt-0 mt-[110px] text-4xl font-extrabold text-primary dark:text-white">
+        <h1 className="max-md:mt-0 mt-[110px] text-4xl font-extrabold text-primary dark:text-white" >
           Connect Seamlessly with <span className="text-gray-600">ChatFlex</span>
         </h1>
         <p className="mt-4 text-lg text-gray-600 dark:text-gray-400">

@@ -7,16 +7,17 @@ import { authOptions } from '@/auth'
 import Link from 'next/link'
 import { MessagesSquareIcon } from 'lucide-react'
 import ChatButton from '../atoms/ChatButton'
+import SubscriptionBanner from './SubscriptionBanner'
 
 const Header = async() => {
   const session = await getServerSession(authOptions)
 
   return (
     <div className='sticky top-0 z-50'>
-        <nav className='flex flex-col sm:flex-row items-center p-5 pl-2  max-w-7xl mx-auto'>
+        <nav className='flex flex-col items-center p-5 pl-2 mx-auto sm:flex-row max-w-7xl'>
             <Logo/>
-            <div className='flex-1 flex items-center justify-end space-x-4'>
-                {/* lang select */}
+            <div className='flex items-center justify-end flex-1 space-x-4'>
+                {/* language select */}
 
                 {/* session part */}
                 {session ? (
@@ -37,6 +38,7 @@ const Header = async() => {
                 <UserBtn session={session}/>
             </div>
         </nav>
+        <SubscriptionBanner/>
     </div>
   )
 }

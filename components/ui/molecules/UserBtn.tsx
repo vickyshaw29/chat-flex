@@ -13,8 +13,12 @@ import CustomAvatar from "../atoms/CustomAvatar";
 import { Session } from "next-auth";
 import { Button } from "../button";
 import { signIn, signOut } from "next-auth/react";
+import { isUserSubscribed } from "./SubscriptionBanner";
+import { Loader } from "lucide-react";
 
 const UserBtn = ({session}:{session:Session|null}) => {
+  const { subscriptionProduct } = isUserSubscribed()
+
   if(session === null){
     return(
       <Button onClick={()=>signIn()} variant={"outline"}>
@@ -25,12 +29,19 @@ const UserBtn = ({session}:{session:Session|null}) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-          <CustomAvatar image={session?.user?.image !} name={session?.user?.name!}/>
+          <CustomAvatar image={session?.user?.image!} name={session?.user?.name!}/>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={()=>signOut()}>SignOut</DropdownMenuItem>
+        {/* <DropdownMenuItem >{!subscriptionProduct ? <Loader/>: subscriptionProduct}</DropdownMenuItem> */}
+        {subscriptionProduct && (
+          <>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>{subscriptionProduct}</DropdownMenuItem>
+          </>
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   );
