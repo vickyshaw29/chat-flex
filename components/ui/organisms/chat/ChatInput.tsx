@@ -27,6 +27,8 @@ const ChatInput = ({ chatId }: { chatId: string }) => {
   });
 
   const onSubmit = async(values:z.infer<typeof formSchema>)=>{
+    const tempInput = values?.input?.trim();
+    form.reset();
     if(values?.input?.length === 0){
         return;
     }
@@ -75,7 +77,7 @@ const ChatInput = ({ chatId }: { chatId: string }) => {
     }   
 
     addDoc(messagesRef(chatId), {
-        input:values?.input,
+        input:tempInput,
         timestamp: serverTimestamp(),
         user:userToStore
     })
@@ -83,11 +85,11 @@ const ChatInput = ({ chatId }: { chatId: string }) => {
   }
 
   return (
-    <div className="sticky bottom-0">
+    <div className="w-full">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="flex max-w-4xl p-2 space-x-2 bg-white border rounded-t-2xl dark:bg-slate-800"
+          className="flex max-w-4xl p-2 mx-auto space-x-2 bg-white border rounded-t-2xl dark:bg-slate-800"
         >
           <FormField
             control={form.control}
