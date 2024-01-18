@@ -16,8 +16,9 @@ import { signIn, signOut } from "next-auth/react";
 import { isUserSubscribed } from "./SubscriptionBanner";
 import { Loader } from "lucide-react";
 
-const UserBtn = ({session}:{session:Session|null}) => {
-  const { subscriptionProduct } = isUserSubscribed()
+const UserBtn = ({session}:{session:Session|null|any}) => {
+  const { membership, isSubscriptionLoading } = isUserSubscribed();
+  
 
   if(session === null){
     return(
@@ -36,10 +37,10 @@ const UserBtn = ({session}:{session:Session|null}) => {
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={()=>signOut()}>SignOut</DropdownMenuItem>
         {/* <DropdownMenuItem >{!subscriptionProduct ? <Loader/>: subscriptionProduct}</DropdownMenuItem> */}
-        {subscriptionProduct && (
+        {!isSubscriptionLoading && membership && (
           <>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>{subscriptionProduct}</DropdownMenuItem>
+            <DropdownMenuItem className="font-mono animate-pulse text-primary">{membership}</DropdownMenuItem>
           </>
         )}
       </DropdownMenuContent>

@@ -20,7 +20,6 @@ const syncFirebaseAuth  = async(session:Session)=>{
 const FirebaseAuthProvider = ({children}:{children:React.ReactNode}) => {
     const { data: session } = useSession()
     useEffect(()=>{
-        console.log(session,"Session")
         if(!session) return;
         syncFirebaseAuth(session)
     },[session])

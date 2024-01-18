@@ -8,10 +8,12 @@ import toast from 'react-hot-toast'
 import { AlertCircleIcon } from "lucide-react";
 import { addDoc, collection, onSnapshot } from "firebase/firestore";
 import { db } from "@/firebase";
+import { isUserSubscribed } from "@/components/ui/molecules/SubscriptionBanner";
+import ManageAccountButton from "@/components/ui/molecules/ManageAccountButton";
+import ManageSubscription from "@/components/ui/molecules/ManageSubscription";
 
 
 const PricingPage: React.FC = () => {
-
   const {data:session} = useSession();
   const [loading, setLoading] = useState<boolean>(false)
   
@@ -59,11 +61,11 @@ const PricingPage: React.FC = () => {
     <div className="flex h-[80vh] justify-center items-center dark:text-white">
       <div className="w-4.5/5 md:w-3/5 lg:w-2/5 xl:w-1.5/3 2xl:w-1/4 shadow-2xl dark:bg-gray-900 bg-white rounded-sm">
         <div className="">
-          <Tabs defaultValue="basic" className="pt-5 p-14 max-sm:p-5">
+          <Tabs defaultValue="Basic" className="pt-5 p-14 max-sm:p-5">
             <TabsList className="w-full h-[5rem] flex gap-2 border border-gray-100 dark:border-none">
               {tiers.map((tier) => (
                 <TabsTrigger key={tier.id} value={tier.id} className="w-24 p-3 font-semibold rounded-sm">
-                  {tier.name}
+                  {tier.id}
                 </TabsTrigger>
               ))}
             </TabsList>
@@ -87,11 +89,16 @@ const PricingPage: React.FC = () => {
                       </ul>
                     </div>
                     {tier?.name !== "Basic" && (
-                      <div className="flex justify-center mt-10">
-                        <Button className="w-[400px] max-sm:w-[200px]" onClick={()=>subscribe(tier)} disabled={loading}>{
-                          loading ? 'Loading...' : 'Subscribe'
-                        }</Button>
-                      </div>
+                      // <div className="flex justify-center mt-10">
+                      //  { !isSubscriptionLoading && !membership &&
+                      //    <Button className="w-[400px] max-sm:w-[200px]" onClick={()=>subscribe(tier)} disabled={loading}>{
+                      //     loading ? 'Loading...' : 'Subscribe'
+                      //   }</Button>
+                      //  }
+                      //  {!isSubscriptionLoading && membership && <ManageAccountButton/>}
+
+                      // </div>
+                      <ManageSubscription loading={loading} tier={tier} onClick={()=>subscribe(tier)}/>
                     )}
                   </TabsContent>
                 )
@@ -109,7 +116,7 @@ export default PricingPage;
 const tiers = [
   {
     name: 'Basic',
-    id: 'basic',
+    id: 'Basic',
     productId:'',
     href: '#',
     priceMonthly: null,
@@ -123,8 +130,8 @@ const tiers = [
     ]
   },
   {
-    name: 'Standard',
-    id: 'standard',
+    name: 'Standard Membership',
+    id: 'Standard',
     productId:`${process.env.NEXT_PUBLIC_API_STANDARD_ID}`,
     href: '#',
     priceMonthly: '$9.99',
@@ -138,8 +145,8 @@ const tiers = [
     ]
   },
   {
-    name: 'Premium',
-    id: 'premium',
+    name: 'Premium Membership',
+    id: 'Premium',
     productId: `${process.env.NEXT_PUBLIC_API_PREMIUM_ID}`,
     href: '#',
     priceMonthly: '$19.99',
