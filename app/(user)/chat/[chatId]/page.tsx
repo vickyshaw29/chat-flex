@@ -1,7 +1,9 @@
 import { authOptions } from '@/auth';
+import ChatAdminControls from '@/components/ui/organisms/chat/ChatAdminControls';
 import ChatInput from '@/components/ui/organisms/chat/ChatInput'
 import ChatMembersBadges from '@/components/ui/organisms/chat/ChatMembersBadges';
 import ChatMessages from '@/components/ui/organisms/chat/ChatMessages';
+import InviteUserBtn from '@/components/ui/organisms/chat/InviteUserBtn';
 import { sortedMessagesRef } from '@/lib/converters/Messages';
 import { getDocs } from 'firebase/firestore';
 import { getServerSession } from 'next-auth';
@@ -19,7 +21,7 @@ const OneOnOneChatPage = async({params:{chatId}}:Props) => {
   return (
     < >
         {/* Admin controls */}
-
+        <ChatAdminControls chatId={chatId}/>
         {/* chat members badge */}
         <ChatMembersBadges chatId={chatId}/>
 
