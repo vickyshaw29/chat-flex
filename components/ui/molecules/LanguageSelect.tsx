@@ -13,7 +13,6 @@ import {
 import { LanguageSupported, LanguageSupportedMap, useLanguageStore, useSubscriptionStore } from "@/store/store";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { Loader } from "lucide-react";
 
 const LanguageSelect = () => {
   const {language, setLanguage, getLanguages, getNotSupportedLanguages} = useLanguageStore();
@@ -25,8 +24,8 @@ const LanguageSelect = () => {
   const isChatPage = pathName?.includes("/chat")
 
   return isChatPage && (
-    <Select onValueChange={(value:LanguageSupported)=>setLanguage(value)}>
-      <SelectTrigger className="w-[180px]">
+    <Select onValueChange={(value:LanguageSupported)=>setLanguage(value)} >
+      <SelectTrigger className="sm:w-[180px] w-auto">
         <SelectValue placeholder={LanguageSupportedMap[language]} />
       </SelectTrigger>
       <SelectContent>

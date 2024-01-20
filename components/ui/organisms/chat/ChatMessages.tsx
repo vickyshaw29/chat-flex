@@ -48,8 +48,8 @@ const ChatMessages = ({
             <div
               className={`flex flex-col relative space-y-2 p-4 w-fit line-clamp-1 mx-2 rounded-lg ${
                 isSender
-                  ? "ml-auto bg-violet-400 text-white rounded-br-none"
-                  : "bg-gray-100 dark:text-gray-100 dark:bg-slate-700 rounded-bl-none "
+                  ? "ml-auto bg-[#F4F4F4] text-[#333333] rounded-br-none dark:bg-[#f8fafc] dark:text-[#0f172a]"
+                  : "bg-[#F4F4F4] text-[#333333] dark:text-gray-100 dark:bg-slate-700 rounded-bl-none "
               }`}
             >
               <p
