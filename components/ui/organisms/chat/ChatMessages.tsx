@@ -65,7 +65,6 @@ const ChatMessages = ({
               </div>
             </div>
             <CustomAvatar className={`${!isSender && "-order-1"}`} image={message?.user?.image} name={message?.user?.name}/>
-
           </div>
         );
       })}

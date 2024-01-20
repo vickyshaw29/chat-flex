@@ -1,6 +1,6 @@
 import { db } from "@/firebase";
 import { Subscription } from "@/types/subscription";
-import { DocumentData, FirestoreDataConverter, QueryDocumentSnapshot, SnapshotOptions, collection, collectionGroup, doc, query, where } from "firebase/firestore";
+import { DocumentData, FirestoreDataConverter, QueryDocumentSnapshot, SnapshotOptions, collection, collectionGroup, deleteDoc, doc, query, where } from "firebase/firestore";
 
 export interface ChatMembers {
     userId: string;
@@ -53,3 +53,7 @@ export const chatMembersCollectionGroupRef = (userId:string)=>{
     return query(collectionGroup(db, "members"), where("userId", "==", userId) ).withConverter(chatMembersConverter)
     
 }
+
+export const deleteChatMemberRef = (chatId: string, userId: string) => {
+    return deleteDoc(doc(db, "chats", chatId, "members", userId));
+  };
