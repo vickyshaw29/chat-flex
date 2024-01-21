@@ -9,6 +9,8 @@ import { MessagesSquareIcon, VideoIcon } from 'lucide-react'
 import ChatButton from '../atoms/ChatButton'
 import SubscriptionBanner from './SubscriptionBanner'
 import LanguageSelect from './LanguageSelect'
+import toast from 'react-hot-toast'
+import VideoChatButton from '../atoms/VideoChatButton'
 
 const Header = async() => {
   const session = await getServerSession(authOptions)
@@ -26,10 +28,8 @@ const Header = async() => {
                      <div className='flex items-center space-x-5'>
                       <Link href={"/chat"} prefetch={false} className='hover:text-slate-500'>
                             <MessagesSquareIcon />
-                        </Link>
-                        <Link href={"/videochat"} prefetch={false} className='hover:text-slate-500'>
-                          <VideoIcon/>
-                        </Link>
+                      </Link>
+                      <VideoChatButton/>
                       <ChatButton/>
                      </div>
                   </>
