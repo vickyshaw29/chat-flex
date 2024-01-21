@@ -13,11 +13,10 @@ import CustomAvatar from "../atoms/CustomAvatar";
 import { Session } from "next-auth";
 import { Button } from "../button";
 import { signIn, signOut } from "next-auth/react";
-import { isUserSubscribed } from "./SubscriptionBanner";
-import { Loader } from "lucide-react";
+import { useIsUserSubscribed } from "@/lib/hooks/useIsUserSubscribed";
 
 const UserBtn = ({session}:{session:Session|null|any}) => {
-  const { membership, isSubscriptionLoading } = isUserSubscribed();
+  const { membership, isSubscriptionLoading } = useIsUserSubscribed();
   
 
   if(session === null){

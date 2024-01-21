@@ -1,16 +1,16 @@
 "use client";
 import React from "react";
 import { Button } from "../button";
-import { isUserSubscribed } from "./SubscriptionBanner";
 import { Loader } from "lucide-react";
 import ManageAccountButton from "./ManageAccountButton";
+import { useIsUserSubscribed } from "@/lib/hooks/useIsUserSubscribed";
 
 const ManageSubscription: React.FC<ManageAccountButtonType> = ({
   loading,
   tier,
   onClick,
 }) => {
-  const { membership, isSubscriptionLoading } = isUserSubscribed();
+  const { membership, isSubscriptionLoading } = useIsUserSubscribed();
   if (isSubscriptionLoading)
     return (
       <div className="flex justify-center mt-10">

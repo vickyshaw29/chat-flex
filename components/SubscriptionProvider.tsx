@@ -23,7 +23,7 @@ const SubscriptionProvider = ({children}:{children:React.ReactNode}) => {
     },(error)=>(
       console.log(error, "error getting document")
     ))
-  },[session])
+  },[session, setSubscription])
 
   return <>{children}</>
 }

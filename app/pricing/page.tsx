@@ -8,7 +8,6 @@ import toast from 'react-hot-toast'
 import { AlertCircleIcon } from "lucide-react";
 import { addDoc, collection, onSnapshot } from "firebase/firestore";
 import { db } from "@/firebase";
-import { isUserSubscribed } from "@/components/ui/molecules/SubscriptionBanner";
 import ManageAccountButton from "@/components/ui/molecules/ManageAccountButton";
 import ManageSubscription from "@/components/ui/molecules/ManageSubscription";
 

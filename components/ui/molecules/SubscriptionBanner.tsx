@@ -3,10 +3,11 @@ import { useSubscriptionStore } from '@/store/store'
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 import { Button } from '../button';
+import {  useIsUserSubscribed } from '@/lib/hooks/useIsUserSubscribed';
 
 const SubscriptionBanner = () => {
     const router = useRouter();
-    const { subscription, membership, isSubscriptionLoading } = isUserSubscribed()
+    const { subscription, membership, isSubscriptionLoading } = useIsUserSubscribed()
     if (isSubscriptionLoading || membership) return null
 
   return (
@@ -16,21 +17,3 @@ const SubscriptionBanner = () => {
 
 export default SubscriptionBanner
 
-
-export const isUserSubscribed = ()=> {
-  const [isSubscriptionLoading, setIsSubscriptionLoading] = useState<boolean>(true)
-  const { subscription } = useSubscriptionStore();
-  const [membership, setMembership] = useState<string>("")
-
-
-  useEffect(()=>{
-    if(Object?.keys(subscription || {})?.length){
-        //@ts-ignore
-        setMembership(subscription?.items?.[0]?.price?.product?.name)
-
-        setIsSubscriptionLoading(false)
-    }
-    return()=>setIsSubscriptionLoading(true)
-  },[subscription])
-  return {subscription, membership, isSubscriptionLoading}
-}
