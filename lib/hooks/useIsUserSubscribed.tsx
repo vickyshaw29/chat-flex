@@ -11,12 +11,13 @@ export const useIsUserSubscribed = ()=> {
   
     useEffect(()=>{
       if(Object?.keys(subscription || {})?.length){
+        console.log({subscription})
           //@ts-ignore
           setMembership(subscription?.items?.[0]?.price?.product?.name)
   
           setIsSubscriptionLoading(false)
-      }
-      return()=>setIsSubscriptionLoading(true)
+      }setIsSubscriptionLoading(false)
+      // return()=>setIsSubscriptionLoading(true)
     },[subscription])
     return {subscription, membership, isSubscriptionLoading}
   }

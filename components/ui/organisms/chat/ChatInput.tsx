@@ -11,6 +11,7 @@ import { addDoc, getDocs, serverTimestamp } from "firebase/firestore";
 import { Button } from "../../button";
 import { useSubscriptionStore } from "@/store/store";
 import toast from "react-hot-toast";
+import { useIsUserSubscribed } from "@/lib/hooks/useIsUserSubscribed";
 
 const formSchema = z.object({
   input: z.string().max(1000),
@@ -18,7 +19,7 @@ const formSchema = z.object({
 
 const ChatInput = ({ chatId }: { chatId: string }) => {
   const { data: session } = useSession();
-  const { subscription } = useSubscriptionStore();
+  const { membership, isSubscriptionLoading, subscription } = useIsUserSubscribed();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -36,35 +37,37 @@ const ChatInput = ({ chatId }: { chatId: string }) => {
         return;
     }
 
-    // check if the user is standard or premium and limit creating a new chat
+    //check if the user  or premium and limit creating a new chat
+    const messages = (await getDocs(limitedMessagesRef(chatId))).docs?.map((d)=>d.data())?.length;
+    const isPro:any = !isSubscriptionLoading && membership;
+    console.log({subscription})
+    if(subscription?.status !=="active" && isPro !== "Premium Membership" && messages > 20){
+        toast.custom((t) => (
+            <div className="px-6 py-2 text-center text-white rounded-md bg-primary dark:text-secondary">
+              Free plan limit exceeded
+              <div>
+                Upgrade to pro{' '}
+                <span
+                  className="ml-1 text-blue-500 underline cursor-pointe"
+                  onClick={() => {
+                    toast.dismiss(t.id); // Dismiss the current toast
+                    // Redirect the user to /pricing
+                    // You may use react-router-dom or Next.js Link here
+                    window.location.href = '/pricing';
+                  }}
+                >
+                  here
+                </span>
+              </div>
+            </div>
+          ), {
+            id: 'free-plan-limit-exceeded',
+            duration: 5000, // Adjust the duration as needed
+          });
 
-    // const messages = (await getDocs(limitedMessagesRef(chatId))).docs?.map((d)=>d.data())?.length;
-    // const isPro = subscription?.role === "pro" && subscription?.status === "active";
-    // if(!isPro && messages > 20){
-    //     toast.custom((t) => (
-    //         <div>
-    //           <div>
-    //             Upgrade to pro{' '}
-    //             <span
-    //               className="text-blue-500 underline cursor-pointer"
-    //               onClick={() => {
-    //                 toast.dismiss(t.id); // Dismiss the current toast
-    //                 // Redirect the user to /pricing
-    //                 // You may use react-router-dom or Next.js Link here
-    //                 window.location.href = '/pricing';
-    //               }}
-    //             >
-    //               here
-    //             </span>
-    //           </div>
-    //         </div>
-    //       ), {
-    //         id: 'free-plan-limit-exceeded',
-    //         duration: 5000, // Adjust the duration as needed
-    //       });
-    // }
+          return;
+    }
     
-    // 
     
     const userToStore: User = {
         id: session?.user?.id,
@@ -83,6 +86,7 @@ const ChatInput = ({ chatId }: { chatId: string }) => {
     })
     form.reset();
   }
+
 
   return (
     <div className="w-full">

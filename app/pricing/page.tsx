@@ -45,6 +45,7 @@ const PricingPage: React.FC = () => {
           id:toastId
         })
         setLoading(false)
+        console.log({error})
       }
       if(url){
         toast.success('Redirecting to the payment page',{id:toastId})
@@ -52,7 +53,7 @@ const PricingPage: React.FC = () => {
         setLoading(false)
       }
     })
-
+    
     //redirect user to checkout page
   }
 
@@ -129,26 +130,11 @@ const tiers = [
     ]
   },
   {
-    name: 'Standard Membership',
-    id: 'Standard',
-    productId:`${process.env.NEXT_PUBLIC_API_STANDARD_ID}`,
-    href: '#',
-    priceMonthly: '$9.99',
-    description: 'Enhanced features for a better chatting experience',
-    feature: [
-      'Unlimited messages in Chats',
-      '5 Participant limit in Chat',
-      '10 Chat Rooms limit',
-      'Supports 5 languages',
-      '24-hour support response time'
-    ]
-  },
-  {
     name: 'Premium Membership',
     id: 'Premium',
     productId: `${process.env.NEXT_PUBLIC_API_PREMIUM_ID}`,
     href: '#',
-    priceMonthly: '$19.99',
+    priceMonthly: '$11',
     description: 'Unlock premium features for an exceptional chatting experience',
     feature: [
       'Unlimited messages in Chats',
